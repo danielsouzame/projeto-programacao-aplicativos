@@ -1,0 +1,10 @@
+.campo-customizado__root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.campo-input-customizado{
+  border: 1px solid #ccc;
+}
