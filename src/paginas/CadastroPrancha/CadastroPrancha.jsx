@@ -36,6 +36,20 @@ const thicknesses = [
 
 function CadastroPrancha() {
   const navigate = useNavigate();
+  const [prancha, setPrancha] = useState({
+    marca: "",
+    tamanho: "",
+    largura: "",
+    grossura: "",
+    cor: "",
+  })
+
+
+  const salvar = () => {
+        const pranchasDoLocalStorage = JSON.parse(localStorage.getItem("pranchas")) || [];
+        localStorage.setItem("pranchas", JSON.stringify(pranchasDoLocalStorage));
+        
+  }
 
   const [marcaSelecionada, setMarcaSelecionada] = useState("");
   const [modeloSelecionado, setModeloSelecionado] = useState("");
@@ -86,7 +100,7 @@ function CadastroPrancha() {
 
 
 
-      <BotaoCustomizado onClick={navegar}/>
+      <BotaoCustomizado aoClicar={salvar}/>
     </>
   );
 }
