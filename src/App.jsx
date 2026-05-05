@@ -12,7 +12,7 @@ import PaginaInicial from "./paginas/PaginaInicial/PaginaInicial";
 
 const roteador = createBrowserRouter([
   {
-    path: "",
+    path: "pagina-inicial",
     element: <PaginaInicial />,
   },
   {

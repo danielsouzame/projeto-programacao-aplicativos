@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MdAddCircle, MdDelete, MdEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
-import Principal from "../../componentes/Principal/Principal";
+import Avatar from "../../componentes/Avatar/Avatar";
 import "./ListaPranchas.css";
 
 function ListaPranchas() {
@@ -10,54 +10,54 @@ function ListaPranchas() {
 
   const [termoBusca, setTermoBusca] = useState("");
 
-  const clientesDoLocalStorage = JSON.parse(localStorage.getItem("clientes")) || [];
+  const pranchasDoLocalStorage = JSON.parse(localStorage.getItem("pranchas")) || [];
 
-  const removerCliente = (clienteParaRemover) => {
-    if (confirm(`Tem certeza que deseja remover o cliente ${clienteParaRemover.nome} ?`)) {
-      const clientesAtualizados = clientesDoLocalStorage.filter(
-        (cliente) => cliente.id !== clienteParaRemover.id
+  const removerPrancha = (pranchaParaRemover) => {
+    if (confirm(`Tem certeza que deseja remover a prancha ${pranchaParaRemover.nome} ?`)) {
+      const pranchasAtualizadas = pranchasDoLocalStorage.filter(
+        (prancha) => prancha.id !== pranchaParaRemover.id
       );
-      localStorage.setItem("clientes", JSON.stringify(clientesAtualizados));
-      navigate("/lista-clientes");
+      localStorage.setItem("pranchas", JSON.stringify(pranchasAtualizadas));
+      navigate("/lista-pranchas");
     }
   };
 
   return (
-    <Principal titulo="Lista de Clientes" voltarPara="/">
+    <>
       <CampoCustomizado
         type="search"
-        placeholder="Buscar Cliente pelo nome, CPF ou cidade."
+        placeholder="Buscar Prancha pelo nome ou modelo."
         value={termoBusca}
         onChange={(e) => setTermoBusca(e.target.value)}
       />
 
-      {clientesFiltrados.map((cliente) => {
+      {pranchasFiltradas.map((prancha) => {
         return (
-          <div key={cliente.id} className="lista-clientes__item">
-            <div className="lista-clientes__item-informacoes">
-              <Avatar nome={cliente.nome} imagem={cliente.foto} />
+          <div key={prancha.id} className="lista-pranchas__item">
+            <div className="lista-pranchas__item-informacoes">
+              <Avatar nome={prancha.nome} imagem={prancha.foto} />
 
-              {cliente.nome}
+              {prancha.nome}
             </div>
             <div>
-              <MdEdit size={24} onClick={() => navigate(`/cadastro-cliente/${cliente.id}`)} />
-              <MdDelete size={24} color="red" onClick={() => removerCliente(cliente)} />
+              <MdEdit size={24} onClick={() => navigate(`/cadastro-prancha/${prancha.id}`)} />
+              <MdDelete size={24} color="red" onClick={() => removerPrancha(prancha)} />
             </div>
           </div>
         );
       })}
 
-      {clientesFiltrados.length === 0 && (
-        <p className="lista-clientes__mensagem-vazia">Nenhum cliente encontrado.</p>
+      {pranchasFiltradas.length === 0 && (
+        <p className="lista-pranchas__mensagem-vazia">Nenhuma prancha encontrada.</p>
       )}
 
       <MdAddCircle
-        className="lista-clientes__botao-adcionar"
+        className="lista-pranchas__botao-adcionar"
         size={64}
         color="#ff9100"
-        onClick={() => navigate("/cadastro-cliente")}
+        onClick={() => navigate("/cadastro-prancha")}
       />
-    </Principal>
+    </>
   );
 }
 

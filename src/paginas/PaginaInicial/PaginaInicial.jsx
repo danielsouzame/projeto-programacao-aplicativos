@@ -12,7 +12,7 @@ function PaginaInicial() {
         Cadastrar Pranchas
       </BotaoCustomizado>
 
-      <BotaoCustomizado tipo="secudario" aoClicar={() => navigate("/lista-pranchas")}>
+      <BotaoCustomizado tipo="secundario" aoClicar={() => navigate("/lista-pranchas")}>
         Lista Pranchas
       </BotaoCustomizado>
     </>

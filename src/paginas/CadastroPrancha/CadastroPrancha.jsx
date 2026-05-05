@@ -3,6 +3,8 @@ import './CadastroPrancha.css'
 import BotaoCustomizado from '../../componentes/BotaoCustomizado/BotaoCustomizado';
 import CampoCustomizado from '../../componentes/CampoCustomizado/CampoCustomizado'
 import { useNavigate } from 'react-router-dom';
+import { IoMdArrowBack } from "react-icons/io";
+
 
 const marcas = [
   { nome: "Sharpeye", modelos: ["Inferno 72", "Zipper", "File Fifty", "Synergy", "#77"] },
@@ -61,7 +63,9 @@ function CadastroPrancha() {
   
   return (
     <>
-      <CampoCustomizado label={"Marca"}
+      <IoMdArrowBack onClick={() => navigate("/lista-pranchas")}/>
+
+      <CampoCustomizado  label={"Marca"}
         placeholder={"Selecione..."}
         opcoes={marcas.map((marca) => ({ label: marca.nome, valor: marca.nome }))}
         value={marcaSelecionada}
@@ -100,7 +104,7 @@ function CadastroPrancha() {
 
 
 
-      <BotaoCustomizado aoClicar={salvar}/>
+      <BotaoCustomizado aoClicar={salvar}>Salvar</BotaoCustomizado>
     </>
   );
 }

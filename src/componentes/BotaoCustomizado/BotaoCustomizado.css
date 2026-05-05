@@ -1,9 +1,22 @@
 .botao-customizado__root {
-  padding: 16px;
+  display: inline-block;
+  padding: 12px 24px;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
   background-color: rgb(41, 255, 41);
   color: black;
+  margin: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.botao-customizado__root:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
 }
 
 .botao-customizado__primario {
