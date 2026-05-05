@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { MdAddCircle, MdDelete, MdEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
 import Avatar from "../../componentes/Avatar/Avatar";
+import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
+import Principal from "../../componentes/Principal/Principal";
+import normalizarString from "../../utils/normalizarString";
 import "./ListaPranchas.css";
 
 function ListaPranchas() {
@@ -22,11 +24,16 @@ function ListaPranchas() {
     }
   };
 
+  const pranchasFiltradas = pranchasDoLocalStorage.filter((prancha) =>
+    normalizarString(prancha.marca).includes(normalizarString(termoBusca)) ||
+    normalizarString(prancha.modelo).includes(normalizarString(termoBusca))
+  );
+
   return (
-    <>
+    <Principal titulo="Lista de Pranchas" voltarPara="/">
       <CampoCustomizado
         type="search"
-        placeholder="Buscar Prancha pelo nome ou modelo."
+        placeholder="Buscar Prancha pela marca ou modelo."
         value={termoBusca}
         onChange={(e) => setTermoBusca(e.target.value)}
       />
@@ -57,7 +64,7 @@ function ListaPranchas() {
         color="#ff9100"
         onClick={() => navigate("/cadastro-prancha")}
       />
-    </>
+    </Principal>
   );
 }
 
