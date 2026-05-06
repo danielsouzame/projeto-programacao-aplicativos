@@ -21,6 +21,10 @@ const roteador = createBrowserRouter([
     element: <CadastroPrancha />,
   },
   {
+    path: "cadastro-prancha/:pranchaId?",
+    element: <CadastroPrancha />,
+  },
+  {
     path: "lista-pranchas",
     element: <ListaPranchas />,
   },

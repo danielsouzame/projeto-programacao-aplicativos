@@ -14,16 +14,18 @@ const marcas = [
       { nome: "Cheat Code", foto: "fotos/sharpCheatCode.jpg" },
       { nome: "File Fifty", foto: "fotos/sharpFifty.jpeg" },
       { nome: "Synergy", foto: "fotos/sharpSynergy.jpg" },
-      { nome: "#77", foto: "fotos/sharp77.png" }]
+      { nome: "#77", foto: "fotos/sharp77.png" },
+    ],
   },
   {
-    nome: "Mayhaem",
+    nome: "Lost Mayhaem",
     modelos: [
       { nome: "Formula-1", foto: "fotos/lostF1.avif" },
       { nome: "The Ripper", foto: "fotos/lostRipper.avif" },
       { nome: "3.0 Stub Driver", foto: "fotos/lostSub.avif" },
       { nome: "El Patrón", foto: "fotos/lostPatron.avif" },
-      { nome: "Pocket Rocket", foto: "fotos/lostPocket.avif" }]
+      { nome: "Pocket Rocket", foto: "fotos/lostPocket.avif" },
+    ],
   },
   {
     nome: "DHD",
@@ -32,7 +34,8 @@ const marcas = [
       { nome: "EE Juliette", foto: "fotos/dhdJuliette.webp" },
       { nome: "MF DNA", foto: "fotos/dhdDna.webp" },
       { nome: "SG No.8", foto: "fotos/dhdSg.webp" },
-      { nome: "Nexus EPS", foto: "fotos/dhdNexus.webp" }]
+      { nome: "Nexus EPS", foto: "fotos/dhdNexus.webp" },
+    ],
   },
   {
     nome: "Channel Island",
@@ -41,8 +44,9 @@ const marcas = [
       { nome: "Goldie", foto: "fotos/channelGoldie.webp" },
       { nome: "Dumpster Diver 2", foto: "fotos/channnelDumpster.webp" },
       { nome: "CI 2.PRO", foto: "fotos/channelCi.webp" },
-      { nome: "Big Happy", foto: "fotos/channelBig.webp" }]
-  }
+      { nome: "Big Happy", foto: "fotos/channelBig.webp" },
+    ],
+  },
 ];
 
 const lengths = [
@@ -76,14 +80,6 @@ const lengths = [
 ];
 
 const widths = [
-  '17 1/2"',
-  '17 9/16"',
-  '17 5/8"',
-  '17 11/16"',
-  '17 3/4"',
-  '17 13/16"',
-  '17 7/8"',
-  '17 15/16"',
   '18"',
   '18 1/16"',
   '18 1/8"',
@@ -166,6 +162,7 @@ function CadastroPrancha() {
     largura: "",
     grossura: "",
     observacao: "",
+    foto: "",
   });
 
   useEffect(() => {
@@ -182,8 +179,14 @@ function CadastroPrancha() {
   }, [params]);
 
   const salvar = () => {
-    if (!prancha.marca?.trim() || !prancha.modelo?.trim()) {
-      toast.error("Marca e Modelo são obrigatórios!");
+    if (
+      !prancha.marca?.trim() ||
+      !prancha.modelo?.trim() ||
+      !prancha.tamanho?.trim() ||
+      !prancha.largura?.trim() ||
+      !prancha.grossura?.trim()
+    ) {
+      toast.error("Preencha os campos obrigatórios!");
       return;
     }
 
@@ -217,10 +220,7 @@ function CadastroPrancha() {
 
   return (
     <Principal voltarPara="/lista-pranchas" titulo="Cadastro de Prancha">
-
-      {getImagem() && (
-        <img src={getImagem()} alt="Foto da prancha" width={150} height={200}/>
-      )}
+      {getImagem() && <img src={getImagem()} alt="Foto da prancha" width={150} height={200} />}
       <CampoCustomizado
         label="Marca"
         placeholder="Selecione..."
@@ -233,9 +233,10 @@ function CadastroPrancha() {
       <CampoCustomizado
         label={"Modelo"}
         placeholder={"Selecione..."}
-        opcoes={marcas
-          .find((marca) => marca.nome === prancha.marca)
-          ?.modelos.map((modelo) => ({ label: modelo.nome, valor: modelo.nome })) || []
+        opcoes={
+          marcas
+            .find((marca) => marca.nome === prancha.marca)
+            ?.modelos.map((modelo) => ({ label: modelo.nome, valor: modelo.nome })) || []
         }
         value={prancha.modelo}
         onChange={(e) => setPrancha({ ...prancha, modelo: e.target.value })}
@@ -244,7 +245,7 @@ function CadastroPrancha() {
 
       <CampoCustomizado
         label={"Tamanho"}
-        placeholder={"5'10\""}
+        placeholder={"Selecione..."}
         opcoes={lengths.map((lengths) => ({ label: lengths, valor: lengths }))}
         value={prancha.tamanho}
         onChange={(e) => setPrancha({ ...prancha, tamanho: e.target.value })}
@@ -253,7 +254,7 @@ function CadastroPrancha() {
 
       <CampoCustomizado
         label={"Largura"}
-        placeholder={'19 1/2"'}
+        placeholder={"Selecione..."}
         opcoes={widths.map((widths) => ({ label: widths, valor: widths }))}
         value={prancha.largura}
         onChange={(e) => setPrancha({ ...prancha, largura: e.target.value })}
@@ -262,7 +263,7 @@ function CadastroPrancha() {
 
       <CampoCustomizado
         label={"Grossura"}
-        placeholder={'2 1/2"'}
+        placeholder={"Selecione..."}
         opcoes={thicknesses.map((thicknesses) => ({ label: thicknesses, valor: thicknesses }))}
         value={prancha.grossura}
         onChange={(e) => setPrancha({ ...prancha, grossura: e.target.value })}
@@ -271,7 +272,9 @@ function CadastroPrancha() {
 
       <CampoCustomizado
         label="Observação"
-        placeholder={"Digite aqui alguma observação sobre a prancha como: cor, rabeta, tipo de quilha, etc..."}
+        placeholder={
+          "Digite aqui alguma observação sobre a prancha como: cor, rabeta, tipo de quilha, etc..."
+        }
         value={prancha.observacao}
         onChange={(e) => setPrancha({ ...prancha, observacao: e.target.value })}
         name="observacao"

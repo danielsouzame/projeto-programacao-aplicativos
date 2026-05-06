@@ -15,7 +15,7 @@ function ListaPranchas() {
   const pranchasDoLocalStorage = JSON.parse(localStorage.getItem("pranchas")) || [];
 
   const removerPrancha = (pranchaParaRemover) => {
-    if (confirm(`Tem certeza que deseja remover a prancha ${pranchaParaRemover.nome} ?`)) {
+    if (confirm(`Tem certeza que deseja remover a prancha ${pranchaParaRemover.modelo} ?`)) {
       const pranchasAtualizadas = pranchasDoLocalStorage.filter(
         (prancha) => prancha.id !== pranchaParaRemover.id
       );
@@ -24,9 +24,10 @@ function ListaPranchas() {
     }
   };
 
-  const pranchasFiltradas = pranchasDoLocalStorage.filter((prancha) =>
-    normalizarString(prancha.marca).includes(normalizarString(termoBusca)) ||
-    normalizarString(prancha.modelo).includes(normalizarString(termoBusca))
+  const pranchasFiltradas = pranchasDoLocalStorage.filter(
+    (prancha) =>
+      normalizarString(prancha.marca).includes(normalizarString(termoBusca)) ||
+      normalizarString(prancha.modelo).includes(normalizarString(termoBusca))
   );
 
   return (
@@ -42,9 +43,9 @@ function ListaPranchas() {
         return (
           <div key={prancha.id} className="lista-pranchas__item">
             <div className="lista-pranchas__item-informacoes">
-              <Avatar imagem={prancha.foto} nome={prancha.modelo} />
+              <Avatar imagem={prancha.foto} nome={prancha.marca} />
 
-              {prancha.marca}
+              {prancha.modelo}
             </div>
             <div>
               <MdEdit size={24} onClick={() => navigate(`/cadastro-prancha/${prancha.id}`)} />
@@ -57,7 +58,6 @@ function ListaPranchas() {
       {pranchasFiltradas.length === 0 && (
         <p className="lista-pranchas__mensagem-vazia">Nenhuma prancha encontrada.</p>
       )}
-
       <MdAddCircle
         className="lista-pranchas__botao-adcionar"
         size={64}
