@@ -42,9 +42,9 @@ function ListaPranchas() {
         return (
           <div key={prancha.id} className="lista-pranchas__item">
             <div className="lista-pranchas__item-informacoes">
-              <Avatar nome={prancha.nome} imagem={prancha.foto} />
+              <Avatar imagem={prancha.foto} nome={prancha.modelo} />
 
-              {prancha.nome}
+              {prancha.marca}
             </div>
             <div>
               <MdEdit size={24} onClick={() => navigate(`/cadastro-prancha/${prancha.id}`)} />

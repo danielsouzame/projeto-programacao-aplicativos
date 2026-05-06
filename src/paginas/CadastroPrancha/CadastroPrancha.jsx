@@ -4,18 +4,45 @@ import { toast } from "react-toastify";
 import BotaoCustomizado from "../../componentes/BotaoCustomizado/BotaoCustomizado";
 import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
 import Principal from "../../componentes/Principal/Principal";
+// import { marcas } from "../../utils/marcas";
 
 const marcas = [
-  { nome: "Sharpeye", modelos: ["Inferno 72", "Cheat Code", "File Fifty", "Synergy", "#77"] },
+  {
+    nome: "Sharpeye",
+    modelos: [
+      { nome: "Inferno 72", foto: "fotos/sharpInferno77.png" },
+      { nome: "Cheat Code", foto: "fotos/sharpCheatCode.jpg" },
+      { nome: "File Fifty", foto: "fotos/sharpFifty.jpeg" },
+      { nome: "Synergy", foto: "fotos/sharpSynergy.jpg" },
+      { nome: "#77", foto: "fotos/sharp77.png" }]
+  },
   {
     nome: "Mayhaem",
-    modelos: ["Formula-1", "The Ripper", "3.0 Stub Driver", "El Patrón", "Pocket Rocket"],
+    modelos: [
+      { nome: "Formula-1", foto: "fotos/lostF1.avif" },
+      { nome: "The Ripper", foto: "fotos/lostRipper.avif" },
+      { nome: "3.0 Stub Driver", foto: "fotos/lostSub.avif" },
+      { nome: "El Patrón", foto: "fotos/lostPatron.avif" },
+      { nome: "Pocket Rocket", foto: "fotos/lostPocket.avif" }]
   },
-  { nome: "DHD", modelos: ["MF Lighting", "EE Juliette", "MF DNA", "SG No.8", "Nexus EPS"] },
+  {
+    nome: "DHD",
+    modelos: [
+      { nome: "MF Lighting", foto: "fotos/dhdLighting.webp" },
+      { nome: "EE Juliette", foto: "fotos/dhdJuliette.webp" },
+      { nome: "MF DNA", foto: "fotos/dhdDna.webp" },
+      { nome: "SG No.8", foto: "fotos/dhdSg.webp" },
+      { nome: "Nexus EPS", foto: "fotos/dhdNexus.webp" }]
+  },
   {
     nome: "Channel Island",
-    modelos: ["The Solution", "Goldie", "Dumpster Diver 2", "CI 2.PRO", "Big Happy"],
-  },
+    modelos: [
+      { nome: "The Solution", foto: "fotos/channelSolution.webp" },
+      { nome: "Goldie", foto: "fotos/channelGoldie.webp" },
+      { nome: "Dumpster Diver 2", foto: "fotos/channnelDumpster.webp" },
+      { nome: "CI 2.PRO", foto: "fotos/channelCi.webp" },
+      { nome: "Big Happy", foto: "fotos/channelBig.webp" }]
+  }
 ];
 
 const lengths = [
@@ -134,10 +161,11 @@ function CadastroPrancha() {
 
   const [prancha, setPrancha] = useState({
     marca: "",
+    modelo: "",
     tamanho: "",
     largura: "",
     grossura: "",
-    cor: "",
+    observacao: "",
   });
 
   useEffect(() => {
@@ -178,8 +206,21 @@ function CadastroPrancha() {
     navigate("/lista-pranchas");
   };
 
+  const getImagem = () => {
+    const marcaSelecionada = marcas.find((marca) => marca.nome === prancha.marca);
+    const modeloSelecionado = marcaSelecionada?.modelos.find(
+      (modelo) => modelo.nome === prancha.modelo
+    );
+
+    return modeloSelecionado?.foto || prancha.foto;
+  };
+
   return (
     <Principal voltarPara="/lista-pranchas" titulo="Cadastro de Prancha">
+
+      {getImagem() && (
+        <img src={getImagem()} alt="Foto da prancha" width={150} height={200}/>
+      )}
       <CampoCustomizado
         label="Marca"
         placeholder="Selecione..."
@@ -193,11 +234,12 @@ function CadastroPrancha() {
         label={"Modelo"}
         placeholder={"Selecione..."}
         opcoes={marcas
-            .find((marca) => marca.nome === prancha.marca)
-            ?.modelos.map((modelo) => ({ label: modelo, valor: modelo })) || []
+          .find((marca) => marca.nome === prancha.marca)
+          ?.modelos.map((modelo) => ({ label: modelo.nome, valor: modelo.nome })) || []
         }
         value={prancha.modelo}
         onChange={(e) => setPrancha({ ...prancha, modelo: e.target.value })}
+        obrigatorio
       />
 
       <CampoCustomizado
@@ -206,6 +248,7 @@ function CadastroPrancha() {
         opcoes={lengths.map((lengths) => ({ label: lengths, valor: lengths }))}
         value={prancha.tamanho}
         onChange={(e) => setPrancha({ ...prancha, tamanho: e.target.value })}
+        obrigatorio
       />
 
       <CampoCustomizado
@@ -214,6 +257,7 @@ function CadastroPrancha() {
         opcoes={widths.map((widths) => ({ label: widths, valor: widths }))}
         value={prancha.largura}
         onChange={(e) => setPrancha({ ...prancha, largura: e.target.value })}
+        obrigatorio
       />
 
       <CampoCustomizado
@@ -222,12 +266,15 @@ function CadastroPrancha() {
         opcoes={thicknesses.map((thicknesses) => ({ label: thicknesses, valor: thicknesses }))}
         value={prancha.grossura}
         onChange={(e) => setPrancha({ ...prancha, grossura: e.target.value })}
+        obrigatorio
       />
 
       <CampoCustomizado
-        label="Cor"
-        value={prancha.cor}
-        onChange={(e) => setPrancha({ ...prancha, cor: e.target.value })}
+        label="Observação"
+        placeholder={"Digite aqui alguma observação sobre a prancha como: cor, rabeta, tipo de quilha, etc..."}
+        value={prancha.observacao}
+        onChange={(e) => setPrancha({ ...prancha, observacao: e.target.value })}
+        name="observacao"
       />
 
       <BotaoCustomizado aoClicar={salvar}>Salvar</BotaoCustomizado>
