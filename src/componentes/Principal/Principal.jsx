@@ -6,8 +6,8 @@ function Principal({ voltarPara, titulo, children }) {
   const navigate = useNavigate();
 
   return (
-    <main className="principal__root">
-      <div className="principal__titulo">
+    <main className="principal__root container">
+      <div className="principal__titulo" >
         {voltarPara && <IoIosArrowBack size={24} onClick={() => navigate(voltarPara)} />}
 
         <h2>{titulo}</h2>
