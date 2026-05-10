@@ -148,9 +148,9 @@ function CadastroPrancha() {
   };
 
   return (
-    <Principal voltarPara="/lista-pranchas" titulo="Cadastro de Prancha">
+    <Principal voltarPara="/" titulo="Cadastro de Prancha">
       {prancha.foto && (
-        <img src={prancha.foto} alt="Foto da prancha" width={150} height={200} style={{ objectFit: "cover", borderRadius: 8 }} />
+        <img src={prancha.foto} alt="Foto da prancha" width={150} height={200} style={{ objectFit: "cover", borderRadius: 8, margin: "0 auto" }} />
       )}
 
       <CampoCustomizado
