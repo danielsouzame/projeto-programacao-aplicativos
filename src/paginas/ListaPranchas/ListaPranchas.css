@@ -1,7 +1,7 @@
 .lista-pranchas__botao-adcionar {
   position: fixed;
   bottom: 64px;
-  left: 24px;
+  right: 24px;
   cursor: pointer;
 }
 

@@ -5,7 +5,7 @@ function Rodape() {
 
   return (
     <footer className="rodape__root">
-      Copyright © {anoAtual} - Todos os direitos reservados
+      MeuQuiver © {anoAtual} - Todos os direitos reservados
     </footer>
   );
 }

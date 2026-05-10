@@ -79,8 +79,8 @@ function ListaPranchas() {
                 <span className="lista-pranchas__card-valor">{prancha.largura}</span>
               </div>
               <div className="lista-pranchas__card-campo">
-                <span className="lista-pranchas__card-label">Grossura</span>
-                <span className="lista-pranchas__card-valor">{prancha.grossura}</span>
+                <span className="lista-pranchas__card-label">Espessura</span>
+                <span className="lista-pranchas__card-valor">{prancha.espessura}</span>
               </div>
               {prancha.observacao && (
                 <div className="lista-pranchas__card-campo">
@@ -115,7 +115,7 @@ function ListaPranchas() {
       <MdAddCircle
         className="lista-pranchas__botao-adcionar"
         size={48}
-        color="#4bff03ff"
+        color="#29c229"
         onClick={() => navigate("/cadastro-prancha")}
       />
     </Principal>

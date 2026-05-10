@@ -10,20 +10,20 @@ const marcas = [
     nome: "Sharpeye",
     modelos: [
       { nome: "Inferno 72", foto: "/fotos/sharpInferno77.png" },
-      { nome: "Cheat Code", foto: "/fotos/sharpCheatCode.jpg" },
-      { nome: "File Fifty", foto: "/fotos/sharpFifty.jpeg" },
-      { nome: "Synergy", foto: "/fotos/sharpSynergy.jpg" },
+      { nome: "Cheat Code", foto: "/fotos/sharpCheatCode.png" },
+      { nome: "File Fifty", foto: "/fotos/sharpFifty.png" },
+      { nome: "Synergy", foto: "/fotos/sharpSynergy.png" },
       { nome: "#77", foto: "/fotos/sharp77.png" },
     ],
   },
   {
     nome: "Lost Mayhaem",
     modelos: [
-      { nome: "Formula-1", foto: "/fotos/lostF1.avif" },
-      { nome: "The Ripper", foto: "/fotos/lostRipper.avif" },
-      { nome: "3.0 Stub Driver", foto: "/fotos/lostSub.avif" },
-      { nome: "El Patrón", foto: "/fotos/lostPatron.avif" },
-      { nome: "Pocket Rocket", foto: "/fotos/lostPocket.avif" },
+      { nome: "Formula-1", foto: "/fotos/lostF1.png" },
+      { nome: "The Ripper", foto: "/fotos/lostRipper.png" },
+      { nome: "3.0 Stub Driver", foto: "/fotos/lostSub.png" },
+      { nome: "El Patrón", foto: "/fotos/lostPatron.png" },
+      { nome: "Pocket Rocket", foto: "/fotos/lostPocket.png" },
     ],
   },
   {
@@ -39,11 +39,11 @@ const marcas = [
   {
     nome: "Channel Island",
     modelos: [
-      { nome: "The Solution", foto: "/fotos/channelSolution.webp" },
-      { nome: "Goldie", foto: "/fotos/channelGoldie.webp" },
-      { nome: "Dumpster Diver 2", foto: "/fotos/channnelDumpster.webp" },
+      { nome: "The Solution", foto: "/fotos/channelSolution.png" },
+      { nome: "Goldie", foto: "/fotos/channelGoldie.png" },
+      { nome: "Dumpster Diver 2", foto: "/fotos/channnelDumpster.png" },
       { nome: "CI 2.PRO", foto: "/fotos/channelCi.webp" },
-      { nome: "Big Happy", foto: "/fotos/channelBig.webp" },
+      { nome: "Big Happy", foto: "/fotos/channelBig.png" },
     ],
   },
 ];
@@ -86,7 +86,7 @@ function CadastroPrancha() {
     modelo: "",
     tamanho: "",
     largura: "",
-    grossura: "",
+    espessura: "",
     observacao: "",
     foto: "",
   });
@@ -124,7 +124,7 @@ function CadastroPrancha() {
       !prancha.modelo?.trim() ||
       !prancha.tamanho?.trim() ||
       !prancha.largura?.trim() ||
-      !prancha.grossura?.trim()
+      !prancha.espessura?.trim()
     ) {
       toast.error("Preencha os campos obrigatórios!");
       return;
@@ -194,11 +194,11 @@ function CadastroPrancha() {
       />
 
       <CampoCustomizado
-        label="Grossura"
+        label="Espessura"
         placeholder="Selecione..."
         opcoes={thicknesses.map((t) => ({ label: t, valor: t }))}
-        value={prancha.grossura}
-        onChange={(e) => setPrancha({ ...prancha, grossura: e.target.value })}
+        value={prancha.espessura}
+        onChange={(e) => setPrancha({ ...prancha, espessura: e.target.value })}
         obrigatorio
       />
 
