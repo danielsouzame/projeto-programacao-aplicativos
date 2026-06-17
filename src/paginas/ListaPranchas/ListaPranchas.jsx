@@ -5,9 +5,12 @@ import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizad
 import Principal from "../../componentes/Principal/Principal";
 import normalizarString from "../../utils/normalizarString";
 import "./ListaPranchas.css";
+import { useAppContext } from "../../contexto/AppContext";
+
 
 function ListaPranchas() {
   const navigate = useNavigate();
+  const { usuarioLogado } = useAppContext();
 
   const [termoBusca, setTermoBusca] = useState("");
 
