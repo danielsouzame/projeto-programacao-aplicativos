@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdAddCircle, MdDelete, MdEdit } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
@@ -6,6 +6,7 @@ import Principal from "../../componentes/Principal/Principal";
 import normalizarString from "../../utils/normalizarString";
 import "./ListaPranchas.css";
 import { useAppContext } from "../../contexto/AppContext";
+import { buscarPranchasPeloUsuario, removerPranchaPeloId } from "../../servicos/clientes";
 
 
 function ListaPranchas() {
@@ -13,20 +14,22 @@ function ListaPranchas() {
   const { usuarioLogado } = useAppContext();
 
   const [termoBusca, setTermoBusca] = useState("");
+  const [pranchas, setPranchas] = useState([]);
 
-  const pranchasDoLocalStorage = JSON.parse(localStorage.getItem("pranchas")) || [];
+  useEffect(() => {
+    setPranchas(buscarPranchasPeloUsuario(usuarioLogado.id));
+  }, [usuarioLogado.id]);
 
   const removerPrancha = (pranchaParaRemover) => {
     if (confirm(`Tem certeza que deseja remover a prancha ${pranchaParaRemover.modelo} ?`)) {
-      const pranchasAtualizadas = pranchasDoLocalStorage.filter(
-        (prancha) => prancha.id !== pranchaParaRemover.id
+      removerPranchaPeloId(pranchaParaRemover.id);
+      setPranchas((prevPranchas) =>
+        prevPranchas.filter((prancha) => prancha.id !== pranchaParaRemover.id)
       );
-      localStorage.setItem("pranchas", JSON.stringify(pranchasAtualizadas));
-      navigate("/lista-pranchas");
     }
   };
 
-  const pranchasFiltradas = pranchasDoLocalStorage.filter(
+  const pranchasFiltradas = pranchas.filter(
     (prancha) =>
       normalizarString(prancha.marca).includes(normalizarString(termoBusca)) ||
       normalizarString(prancha.modelo).includes(normalizarString(termoBusca))
@@ -94,18 +97,8 @@ function ListaPranchas() {
             </div>
 
             <div className="lista-pranchas__card-footer">
-              <span
-                className="lista-pranchas__card-icone"
-                onClick={() => navigate(`/cadastro-prancha/${prancha.id}`)}
-              >
-                <MdEdit size={22} color="#3f50b5" />
-              </span>
-              <span
-                className="lista-pranchas__card-icone"
-                onClick={() => removerPrancha(prancha)}
-              >
-                <MdDelete size={22} color="#eb0014" />
-              </span>
+                <MdEdit size={22} color="#3f50b5" onClick={() => navigate(`/cadastro-prancha/${prancha.id}`)} />
+                <MdDelete size={22} color="#eb0014" onClick={() => removerPrancha(prancha)}/>
             </div>
           </div>
         ))}

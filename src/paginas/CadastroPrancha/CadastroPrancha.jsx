@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import BotaoCustomizado from "../../componentes/BotaoCustomizado/BotaoCustomizado";
 import CampoCustomizado from "../../componentes/CampoCustomizado/CampoCustomizado";
 import Principal from "../../componentes/Principal/Principal";
+import { adicionarPrancha, atualizarPrancha, buscarPranchaPeloId } from "../../servicos/clientes";
+import { useAppContext } from "../../contexto/AppContext";
 
 const marcas = [
   {
@@ -80,6 +82,8 @@ const getFotoDoModelo = (marcaNome, modeloNome) => {
 function CadastroPrancha() {
   const navigate = useNavigate();
   const params = useParams();
+  const {usuarioLogado} = useAppContext();
+
 
   const [prancha, setPrancha] = useState({
     marca: "",
@@ -93,10 +97,8 @@ function CadastroPrancha() {
 
   useEffect(() => {
     if (params.pranchaId) {
-      const pranchasDoLocalStorage = JSON.parse(localStorage.getItem("pranchas")) || [];
-      const pranchaEncontrada = pranchasDoLocalStorage.find(
-        (itemPrancha) => itemPrancha.id === params.pranchaId
-      );
+      const pranchaEncontrada = buscarPranchaPeloId(params.pranchaId);
+
       if (pranchaEncontrada) {
         // Garante que a foto esteja sempre atualizada com base na marca/modelo
         const fotoAtual =
@@ -130,19 +132,12 @@ function CadastroPrancha() {
       return;
     }
 
-    const pranchasDoLocalStorage = JSON.parse(localStorage.getItem("pranchas")) || [];
-
     if (prancha.id) {
-      const indexDaPrancha = pranchasDoLocalStorage.findIndex(
-        (itemPrancha) => itemPrancha.id === prancha.id
-      );
-      pranchasDoLocalStorage[indexDaPrancha] = prancha;
+      atualizarPrancha(prancha);
     } else {
-      const novaPrancha = { id: crypto.randomUUID(), ...prancha };
-      pranchasDoLocalStorage.push(novaPrancha);
+      adicionarPrancha(prancha, usuarioLogado.id);
     }
 
-    localStorage.setItem("pranchas", JSON.stringify(pranchasDoLocalStorage));
     toast.success("Prancha salva com sucesso!");
     navigate("/lista-pranchas");
   };

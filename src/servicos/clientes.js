@@ -1,28 +1,35 @@
-const pranchasDoLocalStorage = JSON.parse(localStorage.getItem("pranchas")) || [];
+const obterPranchasDoLocalStorage = () => {
+  return JSON.parse(localStorage.getItem("pranchas")) || [];
+};
 
 export const buscarPranchasPeloUsuario = (idUsuario) => {
-  return pranchasDoLocalStorage.filter((prancha) => prancha.idUsuario === idUsuario);
+  return obterPranchasDoLocalStorage().filter((prancha) => prancha.idUsuario === idUsuario);
 };
 
 export const buscarPranchaPeloId = (idPrancha) => {
-  return pranchasDoLocalStorage.find((prancha) => prancha.id === idPrancha);
+  return obterPranchasDoLocalStorage().find((prancha) => prancha.id === idPrancha);
 };
 
 export const adicionarPrancha = (prancha, idUsuario) => {
+  const pranchasDoLocalStorage = obterPranchasDoLocalStorage();
   const novaPrancha = { id: crypto.randomUUID(), idUsuario, ...prancha };
   pranchasDoLocalStorage.push(novaPrancha);
   localStorage.setItem("pranchas", JSON.stringify(pranchasDoLocalStorage));
 };
 
 export const atualizarPrancha = (PranchaAtualizada) => {
+  const pranchasDoLocalStorage = obterPranchasDoLocalStorage();
   const indexDaPrancha = pranchasDoLocalStorage.findIndex(
     (prancha) => prancha.id === PranchaAtualizada.id
   );
-  pranchasDoLocalStorage[indexDoCliente] = PranchaAtualizada;
-  localStorage.setItem("pranchas", JSON.stringify(pranchasDoLocalStorage));
+  if (indexDaPrancha >= 0) {
+    pranchasDoLocalStorage[indexDaPrancha] = PranchaAtualizada;
+    localStorage.setItem("pranchas", JSON.stringify(pranchasDoLocalStorage));
+  }
 };
 
-export const removerClientePeloId = (idPrancha) => {
-  const PranchaAtualizadas = pranchasDoLocalStorage.filter((prancha) => prancha.id !== idPrancha);
-  localStorage.setItem("pranchas", JSON.stringify(PranchaAtualizadas));
+export const removerPranchaPeloId = (idPrancha) => {
+  const pranchasDoLocalStorage = obterPranchasDoLocalStorage();
+  const pranchasAtualizadas = pranchasDoLocalStorage.filter((prancha) => prancha.id !== idPrancha);
+  localStorage.setItem("pranchas", JSON.stringify(pranchasAtualizadas));
 };
